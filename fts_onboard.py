@@ -20,21 +20,21 @@ def read_from_excel():
     :return: 返回得到的员工信息列表
     """
     # 从入职信息读取workbook，再获取sheet
-    wb = openpyxl.load_workbook("resources/入职信息.xlsx")  # type: Workbook
+    wb = openpyxl.load_workbook("resources/入职信息-FTS.xlsx", data_only=True)  # type: Workbook
     sheet = wb["Sheet1"]  # type:Worksheet
     employees = []
     for row_num in range(2, sheet.max_row+1):
         employee = {
             "id": sheet[f"G{row_num}"].value,  # 工号
             "name_full": sheet[f"A{row_num}"].value,  # 姓名
-            "dep": sheet[f"K{row_num}"].value,  # 部门
-            "PC": sheet[f"J{row_num}"].value,  # 电脑编号
+            "DEPT": sheet[f"K{row_num}"].value,  # 部门
+            "PC": sheet[f"O{row_num}"].value,  # 电脑编号
             "ad_account": sheet[f"F{row_num}"].value,  # 域账号
             "ad_pwd": sheet[f"I{row_num}"].value,  # 域账号初始密码
             "title": sheet[f"J{row_num}"].value,  # 职位
             "vpn_account": sheet[f"L{row_num}"].value,  # VPN账号
             "mail_account": sheet[f"M{row_num}"].value,  # 邮箱账号&wifi账号
-            "vpn_pwd": sheet[f"J{row_num}"].value,  # VPN密码&WIFI密码
+            "vpn_pwd": sheet[f"N{row_num}"].value,  # VPN密码&WIFI密码
         }
         employees.append(employee)
     return employees
@@ -45,7 +45,7 @@ def read_word_temp():
     读取word模板
     :return: 返回Document对象
     """
-    doc = Document("resources/入职信息模板-fts.docx")
+    doc = Document("resources/入职单模板FTS.docx")
     return doc
 
 
@@ -69,11 +69,11 @@ def make_onboard_words(employees):
         for child in children:
             if child.tag.endswith('txbx'):  # 获取所有文本框的tag
                 for ci in child.iter():
-                    if ci.tag.endswith('main}t'):  # 感觉是获取所有的行
+                    if ci.tag.endswith('main}t'):  # 获取所有的行
                         for key, value in employee.items():
                             if key in ci.text:
-                                ci.text = ci.text.replace(key, value)
-        doc.save(f"onboard_words/fts-入职单{employee['name_en']}.docx")
+                                ci.text = ci.text.replace(key, str(value))
+        doc.save(f"onboard_words/fts-入职单{employee['vpn_account']}.docx")
     return True
 
 
