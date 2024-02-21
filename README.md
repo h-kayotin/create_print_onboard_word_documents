@@ -115,3 +115,11 @@ def onboard_main():
 生成的多个入职单，保存在on_board_words
 
 生成的 入职单打印.docx，保存在resources里，需要打印时，打印该文件即可。
+
+### 生成签名
+
+在excel中填写信息，然后生成word文档用作签名。
+
+运行以下路径的excel文件，然后运行python程序即可
+
+/**gene_sign**/**[gene_sign.py](https://github.com/h-kayotin/kayotin_doc_excel/blob/master/gene_sign/gene_sign.py)**

@@ -10,7 +10,7 @@ import openpyxl
 from openpyxl.worksheet.worksheet import Worksheet
 from docx import Document
 from docx.document import Document as Doc
-from docx.shared import Cm, Pt
+from docx.shared import Cm, Pt, RGBColor
 from docx.oxml.ns import qn
 
 
@@ -70,6 +70,7 @@ class SignFTS:
                 run.font.size = Pt(12)
                 run.font.name = "微软雅黑"
                 run._element.rPr.rFonts.set(qn('w:eastAsia'), '微软雅黑')
+                run.font.color.rgb = RGBColor(118, 113, 113)
 
     def add_pic(self):
         for table in self.doc.tables:
